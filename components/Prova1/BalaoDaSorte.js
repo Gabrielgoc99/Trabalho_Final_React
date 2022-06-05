@@ -33,7 +33,7 @@ export const BalaoDaSorte = () => {
         <View style={Styles.container}>
             <Image style={{marginBottom: 30, width: 200, height: 350}} source={imagem}/>
             <View style={Styles.frase}>
-              <Text style={Styles.paragraph}>{frase}</Text>
+              <Text style={Styles.fraseText}>{frase}</Text>
             </View>
             <Botao style={Styles.botao}
                 cor='red'

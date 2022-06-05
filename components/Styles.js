@@ -25,8 +25,15 @@ export default StyleSheet.create({
   },
   frase: {
     width: 200, 
-    height: 100, 
+    height: 80, 
     marginTop: 5,
+  },
+  fraseText: {
+    fontSize: tamanhos.padraoPequeno,
+    fontWeight: 'bold',    
+    borderColor: 'red',
+    textAlign: 'center',
+    color: 'white',
   },
   imagem: {
     height: 300,

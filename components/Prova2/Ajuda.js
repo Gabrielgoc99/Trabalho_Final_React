@@ -37,7 +37,7 @@ const Ajuda = ({navigation}) => {
                 action={() => navigation.goBack()}
             />
             <Text style={[Styles.text, {fontSize: 15}]}>
-                Acesse no Botão Abaixo o Repoitório do Projeto.
+                Acesse no Botão Abaixo o Repositório do Projeto.
             </Text>
             <Botao style={Styles.botao}
                 cor={colors.botaoAzul}
