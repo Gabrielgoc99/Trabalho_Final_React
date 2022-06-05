@@ -21,11 +21,11 @@ const HomeTab = () => {
                     if (route.name === 'Tela Inicial') {
                         iconName = "home-outline"
 
-                    } else if (route.name === 'Prova 1' || route.name === 'Prova 2') {
-                        iconName = "document-outline"
+                    } else if (route.name === 'Prova 1' ) {
+                        iconName = "newspaper-outline"
+                    } else if (route.name === 'Prova 2') {
+                        iconName = "newspaper"
                     }
-
-                    // You can return any component that you like here!
                     return <Ionicons name={iconName} size={size} color={color}/>;
                 },
 

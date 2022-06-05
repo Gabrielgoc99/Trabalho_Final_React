@@ -1,132 +1,138 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {Animated, ScrollView, Switch, Text, TouchableOpacity} from 'react-native';
-import Estilo from "../Estilo";
+import { useState, useRef } from 'react';
+import { Animated, Switch, Text, View } from 'react-native';
+import Styles from "../Styles";
 import Input from "../Input";
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
-import {tamanhos} from "../Tamanhos";
-
+import { colors } from '../Colors'
+import { Botao } from '../Botao'
 
 const Conta = () => {
+  const [nome, setNome] = useState("");
+  const [idade, setIdade] = useState(null);
+  const [genero, setGenero] = useState("Selecione");  
+  const [limite, setLimite] = useState(1);
 
-    const [nome, setNome] = useState("");
-    const [idade, setIdade] = useState(null);
-    const [genero, setGenero] = useState("Masculino");
-    const [switchAtivado, setSwitchAtivado] = useState(false);
-    const [limite, setLimite] = useState(0);
+  const [switchAtivado, setSwitchAtivado] = useState(false);
+  const toggleSwitch = () => setSwitchAtivado(previousState => !previousState);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    const AtivarSwitch = () => setSwitchAtivado(previousState => !previousState);
-
-    const Cadastrar = () => {
-
-        let estudante;
-        if (!switchAtivado) {
-            estudante = "Não"
-        } else {
-            estudante = "Sim"
+  const Cadastrar = () => {
+      let estudante;
+      if (!switchAtivado) {
+          estudante="Não"
+      } else {
+          estudante="Sim"
+      }
+      if (nome === "" || idade === null || limite === 0) {
+        alert("Preencha todos os campos!!!")
+      } 
+      else {
+        alert('Cadastro Realizado!' + '\n' + 'Nome: ' + nome + '\n' + 'Idade: ' + idade + '\n' + "Genero: " + genero + '\n' +
+              'Limite: ' + limite.toFixed(2) + '\n' + 'Conta de estudante: ' + estudante + '\n' )
         }
-
-        if (nome === "" || idade === null || limite === 0) {
-
-            alert("Preencha todos os dados corretamente")
-
-        } else {
-            alert("Nome: " + nome + '\n' +
-                "Idade: " + idade + '\n' +
-                "Genero: " + genero + '\n' +
-                "Conta de estudante: " + estudante + '\n' +
-                "Limite: " + limite.toFixed(2) + '\n'
-            )
-        }
-
     }
 
-    const Resetar = () => {
+  const Limpar = () => {
+    setNome("");
+    setIdade(null);
+    setLimite(1);
+    setGenero('Selecione');
+    setSwitchAtivado(false);
+  }
 
-        setNome("");
-        setIdade(null);
-        setLimite(0);
-        setGenero("Masculino");
-        setSwitchAtivado(false);
-
-    }
-
-    const [fonte] = useState(new Animated.Value(tamanhos.padraoPequeno));
-    Animated.spring(fonte, {
-        toValue: tamanhos.padraoGrande,
-        speed: 10,
-        bounciness: 30,
+  const fadeIn = () => {    
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 3000
     }).start();
+  };
+  
+  const fadeOut = () => {    
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 3000
+    }).start();
+  };
 
+  return (
+    <View style={Styles.container}>
+      <Text style={Styles.paragraph}>Nome:</Text>
+      <Input style={Styles.Input}
+        onChangeText={setNome}
+        value={nome}
+        placeholder="Nome"
+        />
+      <Text style={Styles.paragraph}>Idade:</Text>
+      <Input style={Styles.Input}
+        onChangeText={setIdade}
+        keyboardType="numeric"
+        value={idade}
+        placeholder="Idade"
+      />
+      <Text style={Styles.paragraph}>Genero:</Text>
+      <Picker
+        style={Styles.input}
+        Genero={genero}
+        onValueChange={(itemValue) => setGenero(itemValue)
+        }>
+        <Picker.Item label="Selecione..." value=""/>
+        <Picker.Item label="Masculino" value="Masculino"/>
+        <Picker.Item label="Feminino" value="Feminino"/>
+      </Picker>
+      <Text style={Styles.paragraph}>Limite: {limite.toFixed(2)}</Text>
+      <View>
+        <Slider
+          style={Styles.slider}
+          minimumValue={1}
+          maximumValue={5000}
+          value={limite}
+          onValueChange={setLimite}
+          minimumTrackTintColor="gray"
+          maximumTrackTintColor="red"
+        />
+      </View>   
+      <Text style={Styles.paragraph}>Estudante:</Text>
+      <Switch style={Styles.switchAdjust}
+      trackColor={{ false: "red", true: "gray" }}
+      thumbColor={switchAtivado ? "#f5dd4b" : "#f4f3f4"}
+      ios_backgroundColor="#3e3e3e"
+      onValueChange={toggleSwitch}
+      value={switchAtivado}
+      />     
+        
+      <Botao
+        style={Styles.botao}
+        label='Cadastrar'
+        action={Cadastrar}
+        cor={colors.botaoAzul}
+      />
+      <Botao
+        style={Styles.botao}
+        label="Limpar"
+        action={Limpar}
+        cor={colors.botaoVermelho}                          
+      />
 
-    return (
-        <ScrollView>
-            <Animated.Text style={[Estilo.text, {fontSize: fonte}]}>Cadastro</Animated.Text>
-
-
-            <Text style={Estilo.label}>Nome:</Text>
-            <Input
-                onChangeText={setNome}
-                value={nome}
-                placeholder="Digite seu nome"
-
-            />
-            <Text style={Estilo.label}>Idade:</Text>
-            <Input
-                onChangeText={setIdade}
-                value={idade}
-                placeholder="Digite sua idade"
-
-            />
-            <Text style={Estilo.label}>Genero:</Text>
-            <Picker
-                style={Estilo.input}
-                Genero={genero}
-                onValueChange={(itemValue) => setGenero(itemValue)
-                }>
-                <Picker.Item label="Masculino" value="Masculino"/>
-                <Picker.Item label="Feminino" value="Feminino"/>
-            </Picker>
-
-            <Text style={Estilo.label}>Limite: {limite.toFixed(2)}</Text>
-            <Slider
-                style={Estilo.slider}
-                minimumValue={0}
-                maximumValue={10000}
-                value={limite}
-                onValueChange={setLimite}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-            />
-
-            <Text style={Estilo.label}>Estudante:</Text>
-            <Switch
-                style={Estilo.switch}
-                trackColor={{false: Estilo.switch.false, true: Estilo.switch.true}}
-                thumbColor={switchAtivado ? Estilo.switch.ativado : Estilo.switch.desativado}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={AtivarSwitch}
-                value={switchAtivado}
-            />
-
-            <TouchableOpacity
-                style={Estilo.touch}
-                onPress={Cadastrar}
-            >
-                <Text style={[Estilo.label, {marginLeft: "0px"}]}>Cadastrar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={[Estilo.touch, {backgroundColor: "#767577"}]}
-                onPress={Resetar}
-            >
-                <Text style={[Estilo.label, {marginLeft: "0px"}]}>Resetar</Text>
-            </TouchableOpacity>
-        </ScrollView>
-
-    );
-
+      <View style={{marginTop: 20}}>
+        <Botao style={Styles.botao}
+          label="Termos" 
+          action={fadeIn} 
+          cor={colors.botaoCinza} />
+      </View>
+      <Animated.View
+        style={[
+          Styles.fadingContainer,
+          {            
+            opacity: fadeAnim
+          }
+        ]}
+      >
+        <Text style={Styles.paragraph}>Ao clicar no botão cadastrar, você confirma que está ciente e aceita os termos de serviço.</Text>
+        
+      </Animated.View>
+    </View>
+  );
 }
-
 export default Conta;

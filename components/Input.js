@@ -1,7 +1,7 @@
 import React from "react";
 import {TextInput} from "react-native";
 import View from "react-native-web/dist/vendor/react-native/Animated/components/AnimatedView";
-import estilo from "./Estilo";
+import Styles from "./Styles";
 
 const Input = (props) => {
 
@@ -10,7 +10,7 @@ const Input = (props) => {
         <View>
 
             <TextInput
-                style={estilo.input}
+                style={Styles.input}
                 onChangeText={props.onChangeText}
                 value={props.value}
                 placeholder={props.placeholder}

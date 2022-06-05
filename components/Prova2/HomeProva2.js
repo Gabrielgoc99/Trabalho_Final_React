@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {Animated, View} from 'react-native';
+import { useState } from 'react';
+import { Animated, View } from 'react-native';
 import Botao from "../Botao";
-import Estilo from "../Estilo";
-import {tamanhos} from "../Tamanhos";
+import Styles from "../Styles";
+import { tamanhos } from "../Tamanhos";
+import { colors } from "../Colors";
 
 
 const HomeProva2 = ({navigation}) => {
@@ -30,15 +31,15 @@ const HomeProva2 = ({navigation}) => {
 
     return (
 
-        <View>
-            <Animated.Text style={[Estilo.text, {fontSize: fonte}]}> Seja Bem-vindo ao FlightBank! </Animated.Text>
-            <Animated.Image source={require("../../assets/cashwithwingsemoji.png")}
+        <View style={Styles.container}>
+            <Animated.Text style={[Styles.paragraph, {fontSize: fonte}]}> Seja Bem-vindo ao Goliath National Bank! </Animated.Text>
+            <Animated.Image source={require("../../assets/GNB.jpg")}
                             style={{alignSelf: 'center', width: largura, height: altura, backgroundColor: 'gray'}}
             />
 
-            <Botao
-                color="blue"
-                title="Ajuda"
+            <Botao style={Styles.botao}
+                cor={colors.botaoAzul}
+                label="Ajuda"
                 action={() => navigation.navigate("Ajuda")}
 
             />

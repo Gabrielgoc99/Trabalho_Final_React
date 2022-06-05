@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import {Image, Text, View} from "react-native";
 import Botao from "../Botao";
-import estilo from "../Estilo";
+import Styles from "../Styles";
 
 export const BalaoDaSorte = () => {
     const [imagem, setImagem] = useState(require('../../assets/balloon_red.jpg'));
@@ -30,19 +30,19 @@ export const BalaoDaSorte = () => {
     }
 
     return (
-        <View>
-            <Image style={estilo.imagem} source={imagem}/>
-
-            <Text style={estilo.paragraph}>{frase}</Text>
-
-            <Botao
-                color='red'
-                title='estourar'
+        <View style={Styles.container}>
+            <Image style={{marginBottom: 30, width: 200, height: 350}} source={imagem}/>
+            <View style={Styles.frase}>
+              <Text style={Styles.paragraph}>{frase}</Text>
+            </View>
+            <Botao style={Styles.botao}
+                cor='red'
+                label='estourar'
                 action={estourar}
             />
-            <Botao
-                color='gray'
-                title='Resetar'
+            <Botao style={Styles.botao}
+                cor='gray'
+                label='Resetar'
                 action={resetar}
             />
         </View>
